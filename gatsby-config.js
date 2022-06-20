@@ -1,18 +1,11 @@
 module.exports = {
   siteMetadata: {
     title: `Portfolio`,
-    description: ``,
-    author: ``,
-    siteUrl: ``,
+    description: `Portfolio built using Gatsby.js`,
+    author: `bravoo sonja`,
+    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
   plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `src`,
-        path: `/src/`,
-      },
-    },
     `gatsby-plugin-sass`,
     {
       resolve: `gatsby-plugin-layout`,
@@ -31,13 +24,6 @@ module.exports = {
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

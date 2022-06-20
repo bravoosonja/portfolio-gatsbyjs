@@ -7,6 +7,7 @@
   "dependencies": {
     "framer-motion": "^6.3.11",
     "gatsby": "^4.16.0",
+    "gatsby-image": "^3.11.0",
     "gatsby-plugin-gatsby-cloud": "^4.16.0",
     "gatsby-plugin-image": "^2.16.1",
     "gatsby-plugin-layout": "^3.16.0",
@@ -45,9 +46,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "git+https://github.com/gatsbyjs/gatsby-starter-default.git"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
-  }
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby-starter-default#readme",
+  "main": "gatsby-browser.js"
 }

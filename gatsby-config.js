@@ -35,6 +35,7 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
+        icon: `./src/icons/favicon-32x32.png`,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

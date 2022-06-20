@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "gatsby"
 // icons
 import { Close } from "../icons/icons"
@@ -31,12 +31,17 @@ const maskAnimation = {
   animate: { width: 0 },
 }
 
-const Menu = ({ menuState, setMenuState }) => {
+const Menu = ({ menuState, setMenuState, x, y }) => {
   return (
-    <>
-      <AnimatePresence>
-        {menuState && (
-          <motion.div exit={{ opacity: 0 }} className="projects">
+    <AnimatePresence>
+      {menuState && (
+        <>
+          <motion.div
+            initial={{ visibility: "hidden" }}
+            animate={{ visibility: "visible", transition: { delay: 1 } }}
+            exit={{ visibility: "hidden", transition: { delay: 1 } }}
+            className="projects"
+          >
             <div className="menu-title">Projects</div>
             <div onClick={() => setMenuState(false)} className="close">
               <Close />
@@ -60,6 +65,8 @@ const Menu = ({ menuState, setMenuState }) => {
                         leftLineFlex={list.leftLineFlex}
                         rightLineFlex={list.rightLineFlex}
                         thumbnailPosition={list.thumbnailPosition}
+                        x={x}
+                        y={y}
                       />
                     ))}
                   </motion.ul>
@@ -67,9 +74,10 @@ const Menu = ({ menuState, setMenuState }) => {
               </div>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+          <Panels />
+        </>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -80,7 +88,11 @@ const List = ({
   rightLineFlex,
   thumbnailPosition,
   id,
+  x,
+  y,
 }) => {
+  const [hoverState, setHoverState] = useState(false)
+
   return (
     <li>
       <Link to={`/projects/${id}`}>
@@ -92,7 +104,11 @@ const List = ({
               className="mask"
             ></motion.div>
           </div>
-          <div className="title">
+          <motion.div
+            className="title"
+            onHoverStart={() => setHoverState(true)}
+            onHoverEnd={() => setHoverState(false)}
+          >
             <h2>
               <motion.div
                 variants={titleSlideUp}
@@ -102,7 +118,7 @@ const List = ({
                 {title}
               </motion.div>
             </h2>
-          </div>
+          </motion.div>
           <div className="thumbnail" style={{ left: thumbnailPosition }}>
             <Image src={src} />
             <motion.div
@@ -111,9 +127,13 @@ const List = ({
               className="mask"
             ></motion.div>
           </div>
-          <div className="floating-image">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: hoverState ? 1 : 0, x: x, y: y }}
+            className="floating-image"
+          >
             <Image src={src} />
-          </div>
+          </motion.div>
           <div className={`line right flex-${rightLineFlex}`}>
             <motion.div
               variants={maskAnimation}
@@ -124,6 +144,38 @@ const List = ({
         </div>
       </Link>
     </li>
+  )
+}
+
+// panel effect animation
+const Panels = () => {
+  // to change the background color after an effect is completed
+  const [panelComplete, setPanelComplete] = useState(false)
+  return (
+    <>
+      <motion.div
+        initial={{ height: 0 }}
+        animate={{ height: [0, window.innerHeight, 0], bottom: [null, 0, 0] }}
+        exit={{ height: [0, window.innerHeight, 0], top: [null, 0, 0] }}
+        transition={{ ...transition, duration: 2, times: [0, 0.5, 1] }}
+        className="left-panel-background"
+        style={{ background: panelComplete ? "#e7e7de" : "#e7dee7" }}
+      ></motion.div>
+      <motion.div
+        style={{ background: panelComplete ? "#e7e7de" : "#e7dee7" }}
+        initial={{ height: 0 }}
+        animate={{
+          height: [0, window.innerHeight, 0],
+          bottom: [0, 0, window.innerHeight],
+        }}
+        exit={{ height: [0, window.innerHeight, 0], bottom: [null, 0, 0] }}
+        transition={{ ...transition, duration: 2, times: [0, 0.5, 1] }}
+        onAnimationComplete={() => {
+          setPanelComplete(!panelComplete)
+        }}
+        className="right-panel-background"
+      ></motion.div>
+    </>
   )
 }
 

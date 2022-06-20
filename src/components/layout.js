@@ -5,6 +5,7 @@ import { useStaticQuery, graphql } from "gatsby"
 //Components
 import Header from "./header"
 import Menu from "./menu"
+import useMousePosition from "../hooks/useMousePosition"
 
 //Styles
 import "../styles/App.scss"
@@ -22,13 +23,16 @@ const Layout = ({ children }) => {
 
   const [menuState, setMenuState] = useState(false)
 
+  // mouse coordinates
+  const { x, y } = useMousePosition()
+
   return (
     <div className="app">
       <Header
         siteTitle={siteData.site.siteMetadata.title}
         setMenuState={setMenuState}
       />
-      <Menu menuState={menuState} setMenuState={setMenuState} />
+      <Menu x={x} y={y} menuState={menuState} setMenuState={setMenuState} />
       <div>
         <main>{children}</main>
       </div>

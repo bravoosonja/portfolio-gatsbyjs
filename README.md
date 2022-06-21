@@ -32,4 +32,5 @@ With [inspiration](https://loerarchitecten.com/en/projects/), and [the knowledge
 * About component & its styling and animation effects
 * Skills component & its styling and animation effects
 * Contact component & its styling and animation effects
-* General layout to fit the project's purpose
+* General modification on design and layout to fit the project's purpose
+

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { Link } from "gatsby"
 // icons
 import { Close } from "../icons/icons"
@@ -31,7 +31,7 @@ const maskAnimation = {
   animate: { width: 0 },
 }
 
-const Menu = ({ menuState, setMenuState, x, y }) => {
+const Menu = ({ menuState, setMenuState, x, y, setCursorHovered }) => {
   return (
     <AnimatePresence>
       {menuState && (
@@ -43,7 +43,13 @@ const Menu = ({ menuState, setMenuState, x, y }) => {
             className="projects"
           >
             <div className="menu-title">Projects</div>
-            <div onClick={() => setMenuState(false)} className="close">
+            <div
+              onClick={() => setMenuState(false)}
+              setMenuState={setMenuState}
+              onMouseEnter={() => setCursorHovered(true)}
+              onMouseLeave={() => setCursorHovered(false)}
+              className="close"
+            >
               <Close />
             </div>
             <div className="menu">
@@ -67,6 +73,8 @@ const Menu = ({ menuState, setMenuState, x, y }) => {
                         thumbnailPosition={list.thumbnailPosition}
                         x={x}
                         y={y}
+                        offset={list.offset}
+                        setCursorHovered={setCursorHovered}
                       />
                     ))}
                   </motion.ul>
@@ -90,11 +98,28 @@ const List = ({
   id,
   x,
   y,
+  offset,
+  setCursorHovered,
 }) => {
   const [hoverState, setHoverState] = useState(false)
 
+  // floating image hover effect
+  const list = useRef()
+
+  const [listPosition, setListPosition] = useState({
+    top: 0,
+    left: 0,
+  })
+
+  useEffect(() => {
+    setListPosition({
+      top: list.current.getBoundingClientRect().top,
+      left: list.current.getBoundingClientRect().left,
+    })
+  }, [hoverState])
+
   return (
-    <li>
+    <li ref={list}>
       <Link to={`/projects/${id}`}>
         <div className="wrapper">
           <div className={`line left flex-${leftLineFlex}`}>
@@ -108,6 +133,8 @@ const List = ({
             className="title"
             onHoverStart={() => setHoverState(true)}
             onHoverEnd={() => setHoverState(false)}
+            onMouseEnter={() => setCursorHovered(true)}
+            onMouseLeave={() => setCursorHovered(false)}
           >
             <h2>
               <motion.div
@@ -129,7 +156,14 @@ const List = ({
           </div>
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: hoverState ? 1 : 0, x: x, y: y }}
+            animate={{
+              opacity: hoverState ? 1 : 0,
+              x: x - listPosition.left,
+              y: y - listPosition.top,
+            }}
+            transition={{
+              ease: "linear",
+            }}
             className="floating-image"
           >
             <Image src={src} />

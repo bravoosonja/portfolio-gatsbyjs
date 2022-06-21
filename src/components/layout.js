@@ -1,13 +1,16 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-//Components
+// Components
 import Header from "./header"
 import Menu from "./menu"
+import About from "./about"
+import Contact from "./contact"
+// Hooks
 import useMousePosition from "../hooks/useMousePosition"
-//Styles
+// Styles
 import "../styles/App.scss"
-//Framer-motion
+// Framer-motion
 import { motion } from "framer-motion"
 
 const Layout = ({ children }) => {
@@ -24,7 +27,7 @@ const Layout = ({ children }) => {
   const [menuState, setMenuState] = useState(false)
   const [cursorHovered, setCursorHovered] = useState(false)
 
-  // mouse coordinates
+  // Mouse coordinates
   const { x, y } = useMousePosition()
 
   return (
@@ -43,6 +46,8 @@ const Layout = ({ children }) => {
         siteTitle={siteData.site.siteMetadata.title}
         setMenuState={setMenuState}
         setCursorHovered={setCursorHovered}
+        onMouseEnter={() => setCursorHovered(true)}
+        onMouseLeave={() => setCursorHovered(false)}
       />
       <Menu
         x={x}

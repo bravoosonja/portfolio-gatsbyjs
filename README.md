@@ -28,7 +28,7 @@
     - Making static query on graphql
 
 # Acknowledgements
-With [inspiration](https://loerarchitecten.com/en/projects/), and [the knowledge on styling and animation effects gained from here](https://www.youtube.com/watch?v=qvFLjZvz5Mw&t=2732s), this project was recreated:
+With [inspiration](https://loerarchitecten.com/en/projects/), and [styling and animation technique gained](https://www.youtube.com/watch?v=qvFLjZvz5Mw&t=2732s), this project was recreated.
 * About component & its styling and animation effects
 * Skills component & its styling and animation effects
 * Contact component & its styling and animation effects

@@ -3,10 +3,10 @@
 ## Features
 - Panel animation effect upon navigation
 - Staggering animation effect for each project
-- Hover effects
-    -on image
-    -on cursor 
 - Custom cursor
+- Hover effects for custom cursor
+- Hover effects for floating images
+
 ## Demo
 
 # Skills used
